@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(["@angular/core"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -20,11 +20,13 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    this.title = "The Backpackers' Lounge";
+                    this.subTitle = "For geeks who want to explore nature beyond limits.";
                 }
                 AppComponent = __decorate([
                     core_1.Component({
-                        selector: 'angularjs2demo',
-                        template: '<h1>AngularJS 2 Demo</h1><div>Hello ASP.NET Core! Greetings from AngularJS 2.</div>'
+                        selector: "athena",
+                        template: "\n        <h1>{{title}}</h1>\n        <h3>{{subTitle}}</h3>\n            <div class=\"menu\">\n                <a class=\"home\" [routerLink]=\"['/home']\">Home</a> |\n            </div>\n        <router-outlet></router-outlet>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
@@ -34,4 +36,3 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         }
     }
 });
-//# sourceMappingURL=app.component.js.map

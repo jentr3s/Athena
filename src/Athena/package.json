@@ -1,18 +1,39 @@
 {
   "version": "1.0.0",
-  "name": "asp.net",
-  "private": true,
+  "name": "athena",
+  "author": "ProudMonkey",
+  "description": "A simple DEMO on Angular 2 RC4 within ASP.NET Core 1.0 RTM",
   "dependencies": {
-    "angular2": "2.0.0-beta.9",
-    "systemjs": "0.19.24",
-    "es6-shim": "^0.33.3",
-    "rxjs": "5.0.0-beta.2"
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "@angular/upgrade": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/router": "3.0.0",
+
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "systemjs": "^0.19.37",
+    "typings": "^1.3.2",
+    "zone.js": "^0.6.12",
+    "moment": "^2.14.1"
   },
+
   "devDependencies": {
-    "gulp": "3.8.11",
-    "gulp-concat": "2.5.2",
-    "gulp-cssmin": "0.1.7",
-    "gulp-uglify": "1.2.0",
-    "rimraf": "2.2.8"
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.13.6",
+    "gulp-uglify": "^2.0.0",
+    "typescript": "^1.8.10"
+  },
+  "scripts": {
+    "postinstall": "typings install dt~core-js --global"
   }
 }

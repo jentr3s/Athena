@@ -1,35 +1,27 @@
 ﻿<html>
 <head>
-    <title>ASP.NET Core: AngularJS 2 Demo</title>
+    <title>ASP.NET Core with Angular 2 RC Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- 1. Load libraries -->
-    <!-- IE required polyfills -->
-    <script src="/js/es6-shim.min.js"></script>
-    <script src="/js/system-polyfills.js"></script>
+    <!-- Step 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="js/shim.min.js"></script>
+    <script src="js/zone.js"></script>
+    <script src="js/Reflect.js"></script>
+    <script src="js/system.src.js"></script>
 
-    <!-- Angular2 libraries -->
-    <script src="/js/angular2-polyfills.js"></script>
-    <script src="/js/system.src.js"></script>
-    <script src="/js/Rx.js"></script>
-    <script src="/js/angular2.dev.js"></script>
+    <!-- Angular2 Native Directives -->
+    <script src="/js/moment.js"></script>
 
-    <!-- Bootstrap via SystemJS -->
+    <!-- Step 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            packages: {
-                "app": {
-                    defaultExtension: 'js'
-                }
-            }
-        });
-        System.import('app/boot')
-            .then(null, console.error.bind(console));
+      System.import('app').catch(function(err){ console.error(err); });
     </script>
 </head>
-
+<!-- Step 3. Display the application -->
 <body>
     <!-- Application PlaceHolder -->
-    <angularjs2demo>Please wait...</angularjs2demo>
+    <athena>Please wait...</athena>
 </body>
-</html>
+</html>  

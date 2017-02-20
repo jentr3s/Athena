@@ -1,13 +1,13 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "system",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "noEmitOnError": true,
+    "noEmitOnError": false,
     "removeComments": false,
-    "sourceMap": true,
     "target": "es5"
   },
   "exclude": [

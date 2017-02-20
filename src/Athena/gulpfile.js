@@ -1,85 +1,71 @@
-﻿/// <binding BeforeBuild='default' />
+﻿var gulp = require('gulp'),
+    gp_clean = require('gulp-clean'),
+    gp_concat = require('gulp-concat'),
+    gp_less = require('gulp-less'),
+    gp_sourcemaps = require('gulp-sourcemaps'),
+    gp_typescript = require('gulp-typescript'),
+    gp_uglify = require('gulp-uglify');
 
-"use strict";
+/// Define paths
+var srcPaths = {
+    app: ['Scripts/app/main.ts', 'Scripts/app/**/*.ts'],
+    js: [
+        'Scripts/js/**/*.js',
+        'node_modules/core-js/client/shim.min.js',
+        'node_modules/zone.js/dist/zone.js',
+        'node_modules/reflect-metadata/Reflect.js',
+        'node_modules/systemjs/dist/system.src.js',
+        'node_modules/typescript/lib/typescript.js',
+        'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js',
+        'node_modules/moment/moment.js'
+    ],
+    js_angular: [
+        'node_modules/@angular/**'
+    ],
+    js_rxjs: [
+        'node_modules/rxjs/**'
+    ]
+};
 
-var _ = require('lodash'),
-    gulp = require('gulp'),
-    uglify = require('gulp-uglify'),
-    cssmin = require('gulp-cssmin'),
-    rename = require('gulp-rename');
+var destPaths = {
+    app: 'wwwroot/app/',
+    js: 'wwwroot/js/',
+    js_angular: 'wwwroot/js/@angular/',
+    js_rxjs: 'wwwroot/js/rxjs/'
+};
 
-var angularJs = [
-    './node_modules/angular2/bundles/angular2.dev.js',
-    './node_modules/angular2/bundles/router.dev.js',
-    './node_modules/angular2/bundles/angular2-polyfills.js',
-    './node_modules/angular2/bundles/http.dev.js'
-];
-
-var js = [
-    './node_modules/bootstrap/dist/js/bootstrap.js',
-    './node_modules/systemjs/dist/system.js',
-    './node_modules/rxjs/bundles/Rx.js',
-    './node_modules/typescript/lib/typescript.js',
-    './node_modules/jquery/dist/jquery.js'
-];
-
-var css = [
-    './node_modules/bootstrap/dist/css/bootstrap.css'
-];
-
-var fonts = [
-    './node_modules/bootstrap/dist/fonts/*.*'
-];
-
-gulp.task('copy-js', function () {
-    _.forEach(js, function (file, _) {
-        gulp.src(file)
-            .pipe(gulp.dest('./wwwroot/js'))
-    });
-    _.forEach(angularJs, function (file, _) {
-        gulp.src(file)
-            .pipe(gulp.dest('./wwwroot/js/angular2'))
-    });
+// Compile, minify and create sourcemaps all TypeScript files 
+// and place them to wwwroot/app, together with their js.map files.
+gulp.task('app', ['app_clean'], function () {
+    return gulp.src(srcPaths.app)
+        .pipe(gp_sourcemaps.init())
+        .pipe(gp_typescript(require('./tsconfig.json').compilerOptions))
+        .pipe(gp_uglify({ mangle: false }))
+        .pipe(gp_sourcemaps.write('/'))
+        .pipe(gulp.dest(destPaths.app));
 });
 
-gulp.task('copy-min-js', function () {
-    _.forEach(js, function (file, _) {
-        gulp.src(file)
-            .pipe(uglify())
-            .pipe(rename({ extname: '.min.js' }))
-            .pipe(gulp.dest('./wwwroot/js'))
-    });
-    _.forEach(angularJs, function (file, _) {
-        gulp.src(file)
-            .pipe(uglify())
-            .pipe(rename({ extname: '.min.js' }))
-            .pipe(gulp.dest('./wwwroot/js/angular2'))
-    });
+// Delete wwwroot/app contents
+gulp.task('app_clean', function () {
+    return gulp.src(destPaths.app + "*", { read: false })
+    .pipe(gp_clean({ force: true }));
 });
 
-gulp.task('copy-css', function () {
-    _.forEach(css, function (file, _) {
-        gulp.src(file)
-            .pipe(gulp.dest('./wwwroot/css'))
-    });
-    _.forEach(fonts, function (file, _) {
-        gulp.src(file)
-            .pipe(gulp.dest('./wwwroot/fonts'))
-    });
+// Copy all JS files from external libraries to wwwroot/js
+gulp.task('js', function () {
+    gulp.src(srcPaths.js_angular)
+        .pipe(gulp.dest(destPaths.js_angular));
+    gulp.src(srcPaths.js_rxjs)
+        .pipe(gulp.dest(destPaths.js_rxjs));
+    return gulp.src(srcPaths.js)
+        .pipe(gulp.dest(destPaths.js));
 });
 
-gulp.task('copy-min-css', function () {
-    _.forEach(css, function (file, _) {
-        gulp.src(file)
-            .pipe(cssmin())
-            .pipe(rename({ extname: '.min.css' }))
-            .pipe(gulp.dest('./wwwroot/css'))
-    });
-    _.forEach(fonts, function (file, _) {
-        gulp.src(file)
-            .pipe(gulp.dest('./wwwroot/fonts'))
-    });
+
+// Watch specified files and define what to do upon file changes
+gulp.task('watch', function () {
+    gulp.watch([srcPaths.app, srcPaths.js], ['app', 'js']);
 });
 
-gulp.task('default', ['copy-js', 'copy-css']);
-gulp.task('minify', ['copy-min-js', 'copy-min-css']);
+// Define the default task so it will launch all other tasks
+gulp.task('default', ['app', 'js', 'watch']);
