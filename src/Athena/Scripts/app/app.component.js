@@ -20,13 +20,11 @@ System.register(["@angular/core"], function(exports_1, context_1) {
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
-                    this.title = "The Backpackers' Lounge";
-                    this.subTitle = "For geeks who want to explore nature beyond limits.";
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: "athena",
-                        template: "\n        <h1>{{title}}</h1>\n        <h3>{{subTitle}}</h3>\n            <div class=\"menu\">\n                <a class=\"home\" [routerLink]=\"['/home']\">Home</a> |\n            </div>\n        <router-outlet></router-outlet>\n    "
+                        template: "\n        <h1>AngularJS 2 Demo</h1>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

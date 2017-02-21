@@ -4,17 +4,11 @@
 @Component({
     selector: "athena",
     template: `
-        <h1>{{title}}</h1>
-        <h3>{{subTitle}}</h3>
-            <div class="menu">
-                <a class="home" [routerLink]="['/home']">Home</a> |
-            </div>
-        <router-outlet></router-outlet>
+        <h1>AngularJS 2 Demo</h1>
     `
 })
 
 
 export class AppComponent {
-    title = "The Backpackers' Lounge";
-    subTitle = "For geeks who want to explore nature beyond limits.";
+    
 }
